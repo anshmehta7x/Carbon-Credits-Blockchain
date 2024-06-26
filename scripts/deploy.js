@@ -1,20 +1,19 @@
 async function main() {
-  const [deployer, verifier, regulator] = await ethers.getSigners();
+  const signers = await ethers.getSigners();
+  const deployer = signers[0];
 
   console.log("Deploying contracts with the account:", deployer.address);
-  console.log(verifier.address, regulator.address);
   const CarbonCreditManager = await ethers.getContractFactory(
     "CarbonCreditManager"
   );
   const carbonCreditManager = await CarbonCreditManager.deploy(
-    verifier.address,
-    regulator.address
+    deployer.address,
+    deployer.address
   );
-  await carbonCreditManager.waitForDeployment();
-  console.log(
-    "CarbonCreditManager deployed to:",
-    await carbonCreditManager.address
-  );
+  await carbonCreditManager.deployTransaction.wait();
+
+  console.log(carbonCreditManager.address);
+  console.log(carbonCreditManager.deployTransaction);
 }
 
 main()
