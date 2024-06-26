@@ -22,11 +22,31 @@ contract CarbonCreditManager is CarbonCredit{
         regulator = _regulator;
     }
 
+    function getAuthority() public view returns (address[] memory) {
+        address[] memory authority = new address[](2);
+        authority[0] = verifier;
+        authority[1] = regulator;
+        return authority;
+    }
+
+
     function giveCredits(address _receiver, uint256 _amount) public onlyVerifier {
         mint(_receiver, _amount);
     }
 
     function takeCredits(address _receiver, uint256 _amount) public onlyRegulator {
         burn(_receiver, _amount);
+    }
+
+    function purchaseCredits() public payable{
+        require(msg.value>1 ether, "Not enough payment");
+        mint(msg.sender, msg.value / 10**18);
+        withdrawal(msg.value);
+    }
+
+
+    function withdrawal(uint256 _value) private {
+
+        payable(owner()).transfer(_value);
     }
 }
