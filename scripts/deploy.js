@@ -12,8 +12,7 @@ async function main() {
   );
   await carbonCreditManager.deployTransaction.wait();
 
-  console.log(carbonCreditManager.address);
-  console.log(carbonCreditManager.deployTransaction);
+  console.log("Deployed to ", carbonCreditManager.address);
 }
 
 main()

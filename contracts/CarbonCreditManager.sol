@@ -22,13 +22,13 @@ contract CarbonCreditManager is CarbonCredit{
         regulator = _regulator;
     }
 
-    function getAuthority() public view returns (address[] memory) {
-        address[] memory authority = new address[](2);
-        authority[0] = verifier;
-        authority[1] = regulator;
-        return authority;
+    function getVerifier() public view returns (address) {
+        return verifier;
     }
 
+    function getRegulator() public view returns (address) {
+        return regulator;
+    }
 
     function giveCredits(address _receiver, uint256 _amount) public onlyVerifier {
         mint(_receiver, _amount);
