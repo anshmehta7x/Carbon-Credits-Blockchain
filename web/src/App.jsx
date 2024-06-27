@@ -4,6 +4,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import "./App.css";
 import { useAccount, useReadContract } from "wagmi";
 import abi from "./abi";
+import User from "./User";
 
 function App() {
   const account = useAccount();
@@ -85,8 +86,7 @@ function App() {
           </div>
         ) : (
           <div>
-            <h1>User</h1>
-            <p>Address: {account.address}</p>
+            <User account={account} contract_address={contract_address}></User>
           </div>
         )}
       </div>
